@@ -1,0 +1,59 @@
+Wallmart <- read.csv("C:\\Users\\dharm\\Downloads\\Walmart_Store_sales.csv")
+View(Wallmart)
+
+# Calculate total weekly sales by store
+store_sales <- aggregate(Weekly_Sales ~ Store, data = Wallmart, FUN = sum)
+
+# Find the store with maximum sales
+max_sales_store <- store_sales[which.max(store_sales$Weekly_Sales), ]
+
+# Print the result
+cat("Store", max_sales_store$Store, "has the maximum sales of $", max_sales_store$Weekly_Sales, "\n")
+
+# Generate frequency distribution for fuel price , unemployment rate and CPI
+hist(Wallmart$Fuel_Price, xlab="Fuel Price", col="grey",border="black",breaks=100,main="Fequency Distribution of Fuel Price")
+hist(Wallmart$CPI, xlab="CPI", col="grey",border="black",breaks=100,main="Fequency Distribution of CPI")
+hist(Wallmart$Unemployment, xlab="Unemployment Rate", col="grey",border="black",breaks=300,main="Fequency Distribution of Unemployment Rate")
+
+# Store wise min and max temperature with respective charts
+store_max <- aggregate(Wallmart$Temperature ~ Wallmart$Store, data = Wallmart, FUN = max)
+store_max
+
+store_min <- aggregate(Wallmart$Temperature ~ Wallmart$Store, data = Wallmart, FUN = min)
+store_min
+
+labelX <- as.vector(store_max[['Wallmart$Store']])
+labelY <- as.vector(store_max[['Wallmart$Temperature']])
+barplot(labelY,names.arg=labelX, xlab="Store", ylab="Max Frequency", col="grey", main="Maximum by store",border="black")
+
+labelX <- as.vector(store_min[['Wallmart$Store']])
+labelY <- as.vector(store_min[['Wallmart$Temperature']])
+barplot(labelY,names.arg=labelX, xlab="Store", ylab="Max Frequency", col="grey", main="Minimum by store",border="black")
+
+# Store wise total sales along with barplot for the same
+store_total <- aggregate(Wallmart$Weekly_Sales ~ Wallmart$Store, data = Wallmart, FUN = sum)
+store_total
+
+labelX <- as.vector(store_total[['Wallmart$Store']])
+labelY <- as.vector(store_total[['Wallmart$Weekly_Sales']])
+barplot(labelY,names.arg=labelX, xlab="Store", ylab="Frequency", col="pink", main="Sales total by store",border="black")
+
+# Which store has minimum unemployment rate
+store_unemployment <- aggregate(Unemployment ~ Store, Wallmart, min)
+
+print(store_unemployment)
+
+min_store_unemployment <- store_unemployment[which.min(store_unemployment$Unemployment), ]
+print(min_store_unemployment)
+
+# What is average price of fuel for each store
+Fuel_avg <- aggregate(Wallmart$Fuel_Price ~ Wallmart$Store , data = Wallmart, FUN = mean)
+
+Fuel_avg
+
+# Generate histogram to analyse fuel prices and sales data 
+hist(Wallmart$Fuel_Price,main = "Histogram of fule price", xlab = "FUEL PRICE", ylab = "Frequency",
+
+     breaks = 30,col="grey",freq=TRUE)
+
+​
